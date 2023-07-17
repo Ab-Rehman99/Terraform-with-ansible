@@ -50,14 +50,18 @@ ansible_inventory="/home/ubuntu/ansible/hosts"
 sudo apt-get install jq -y
 # Function to retrieve IP addresses from Terraform and update the inventory file
 update_inventory() {
-  # Retrieve the public IP addresses using Terraform output
   # Retrieve the public IP addresses using Terraform output in JSON format
   public_ips=$(terraform output -json public_ip | jq -r '.[]')
 
- # Write the IP addresses to the inventory file
+  # Retrieve the instance names using Terraform output in JSON format
+  instance_names=$(terraform output -json instance_names | jq -r '.[]')
+
+  # Write the IP addresses and instance names to the inventory file
   echo "[webServers]" > "$ansible_inventory"
+  i=0
   while IFS= read -r ip; do
-    echo "node ansible_host=$ip" >> "$ansible_inventory"
+    echo "${instance_names[$i]} ansible_host=$ip" >> "$ansible_inventory"
+    i=$((i + 1))
   done <<< "$public_ips"
   echo "" >> "$ansible_inventory"
   echo "[all:vars]" >> "$ansible_inventory"

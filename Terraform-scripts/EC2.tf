@@ -14,3 +14,6 @@ resource "aws_instance" "Ngnix-server" {
 output "public_ip" {
   value = aws_instance.Ngnix-server[*].public_ip
 }
+output "instance_names" {
+  value = aws_instance.Ngnix-server[*].tags.Name
+}
