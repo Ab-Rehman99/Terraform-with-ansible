@@ -42,7 +42,9 @@ echo "Applying Terraform configuration..."
 terraform apply -auto-approve
 echo "Terraform output saved..."
 terraform output > /home/ubuntu/output.txt
-
+# Wait for 3 minutes before updating the Ansible inventory
+echo "Waiting for 3 minutes..."
+sleep 3m
 # Ansible inventory file
 ansible_inventory="home/ubuntu/ansible/hosts"
 
