@@ -27,7 +27,7 @@ sudo apt-get install terraform
 
 # Clone the repository
 echo "Cloning the repository..."
-git clone https://github.com/Ab-Rehman99/Terraform-with-ansible.git
+#git clone https://github.com/Ab-Rehman99/Terraform-with-ansible.git
 
 # Move into the cloned directory
 echo "Moving into the cloned directory..."
@@ -43,17 +43,18 @@ terraform apply -auto-approve
 echo "Terraform output saved..."
 terraform output > /home/ubuntu/output.txt
 # Wait for 3 minutes before updating the Ansible inventory
-echo "Waiting for 3 minutes..."
-sleep 3m
+#echo "Waiting for 3 minutes..."
+#sleep 3m
 # Ansible inventory file
 ansible_inventory="/home/ubuntu/ansible/hosts"
-
+sudo apt-get install jq -y
 # Function to retrieve IP addresses from Terraform and update the inventory file
 update_inventory() {
   # Retrieve the public IP addresses using Terraform output
-  public_ips=$(terraform output -raw public_ip)
+  # Retrieve the public IP addresses using Terraform output in JSON format
+  public_ips=$(terraform output -json public_ip | jq -r '.[]')
 
-  # Write the IP addresses to the inventory file
+ # Write the IP addresses to the inventory file
   echo "[webServers]" > "$ansible_inventory"
   while IFS= read -r ip; do
     echo "node ansible_host=$ip" >> "$ansible_inventory"
