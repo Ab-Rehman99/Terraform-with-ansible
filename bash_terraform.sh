@@ -44,12 +44,12 @@ echo "Terraform output saved..."
 terraform output > /home/ubuntu/output.txt
 
 # Ansible inventory file
-ansible_inventory="home/ubuntu/ansible/hosts"
+ansible_inventory="/home/ubuntu/ansible/hosts"
 
 # Function to retrieve IP addresses from Terraform and update the inventory file
 update_inventory() {
   # Retrieve the public IP addresses using Terraform output
-  public_ips=$(terraform output -raw public_ips)
+  public_ips=$(terraform output -raw public_ip)
 
   # Write the IP addresses to the inventory file
   echo "[webServers]" > "$ansible_inventory"
