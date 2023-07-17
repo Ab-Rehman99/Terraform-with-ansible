@@ -27,7 +27,7 @@ sudo apt-get install terraform
 
 # Clone the repository
 echo "Cloning the repository..."
-#git clone https://github.com/Ab-Rehman99/Terraform-with-ansible.git
+git clone https://github.com/Ab-Rehman99/Terraform-with-ansible.git
 
 # Move into the cloned directory
 echo "Moving into the cloned directory..."
