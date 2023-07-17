@@ -1,0 +1,5 @@
+[webServers]
+node ansible_host=15.206.203.16
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
